@@ -51,7 +51,7 @@ HCMAX7219::HCMAX7219(byte LOAD)
 
 /* Loads a text string into the output buffer using the seven segment 
    character set */
-void HCMAX7219::print7Seg(char TextString[], unsigned int Offset)
+void HCMAX7219::print7Seg(const char TextString[], unsigned int Offset)
 {
   unsigned int _StringLength;
   unsigned int bufferindex;
@@ -76,8 +76,16 @@ void HCMAX7219::print7Seg(char TextString[], unsigned int Offset)
   /* Copy text into output buffer */
   while(bufferindex != 0 && charindex != _StringLength)
   {
-     bufferindex--;
-	 DisplayBuffer[bufferindex] = SevenSegChar[TextString[charindex] - 32];
+     if (TextString[charindex] != '.')
+     {
+        bufferindex--;
+	      DisplayBuffer[bufferindex] = SevenSegChar[TextString[charindex] - 32];
+     }
+     else
+     {
+       DisplayBuffer[bufferindex] |=  SevenSegChar[14];
+     }
+     
      charindex++;
   } 
 }
@@ -164,7 +172,13 @@ void HCMAX7219::print7Seg(long number, byte decimalPlace, unsigned int Offset)
   {
     Digits[index] = '0';
     index++;
-  }else
+    for (int i=0;i<(int)decimalPlace;i++)
+    {
+      Digits[index] = '0';
+      index++;
+    }
+  }
+  else
   {
 	/* Convert the number to an ASCII decimal string */
     while (Temp)
