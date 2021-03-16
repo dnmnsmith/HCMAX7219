@@ -168,7 +168,7 @@ const byte SevenSegChar[101] = {0x00, // SPACE
 #endif
 
 #ifdef SEVENSEGMENT
-const char Font8x8[][8] = 
+const int Font8x8[][8] = 
 { {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
   {0x00,0x00,0x00,0xF2,0xF2,0x00,0x00,0x00},
   {0x00,0xE0,0xE0,0x00,0x00,0xE0,0xE0,0x00},
@@ -282,7 +282,7 @@ class HCMAX7219
   void Refresh(void);
 
 #ifdef SEVENSEGMENT
-  void print7Seg(char TextString[], unsigned int Offset);
+  void print7Seg(const char TextString[], unsigned int Offset);
   void print7Seg(long number, unsigned int Offset);
   void print7Seg(long number, byte decimalPlace, unsigned int Offset);
 #endif  
